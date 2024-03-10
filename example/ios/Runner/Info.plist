@@ -45,5 +45,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	 <key>LSApplicationQueriesSchemes</key>
+      <array>
+        <string>bank100000000007</string>
+      </array>
 </dict>
 </plist>

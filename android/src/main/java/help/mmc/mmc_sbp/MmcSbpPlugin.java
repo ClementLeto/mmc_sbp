@@ -39,7 +39,7 @@ public class MmcSbpPlugin implements FlutterPlugin, MethodCallHandler {
                 openBank(call, result);
                 break;
             case "getInstalledBanks":
-                result.success(getInstalledApps(call.arguments()));
+                result.success(getInstalledBanks(call.arguments()));
                 break;
             default:
                 result.notImplemented();
@@ -51,7 +51,7 @@ public class MmcSbpPlugin implements FlutterPlugin, MethodCallHandler {
         channel.setMethodCallHandler(null);
     }
 
-    private ArrayList<String> getInstalledApps(ArrayList<String> data) {
+    private ArrayList<String> getInstalledBanks(ArrayList<String> data) {
         ArrayList<String> installedApps = new ArrayList<>();
         if (data != null) {
             PackageManager packageManager = context.getPackageManager();
@@ -70,7 +70,7 @@ public class MmcSbpPlugin implements FlutterPlugin, MethodCallHandler {
         String packageName = call.argument("package_name");
         String url = call.argument("url");
         if (url == null) {
-            result.error("InvalidArguments", "Invalid arguments provided", null);
+            result.error("InvalidArguments", "Invalid arguments provided", "sbp_plugin");
             return;
         }
         try {

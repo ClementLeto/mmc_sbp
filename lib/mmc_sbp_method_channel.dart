@@ -37,9 +37,18 @@ class MethodChannelMmcSbp extends MmcSbpPlatform {
       }
       return _openAndroidBank(url: url, packageName: packageName);
     } else if (Platform.isIOS) {
+      String url = nspkUrl;
+      String? schema;
+      if (!member.isInstalled) {
+        url = "${member.webClientUrl}/${nspkUrl.split("/").last}";
+      } else {
+        schema = member.schema;
+      }
+      print(url);
+      print("schema: $schema");
       return openBankIOS(
-        nspkUrl,
-        member.schema,
+        url,
+        schema,
       );
     }
     return Future.value(false);
@@ -57,7 +66,7 @@ class MethodChannelMmcSbp extends MmcSbpPlatform {
         },
       );
 
-  Future<bool> openBankIOS(String url, String schema) async =>
+  Future<bool> openBankIOS(String url, String? schema) async =>
       await methodChannel.invokeMethod(
         'openBank',
         {

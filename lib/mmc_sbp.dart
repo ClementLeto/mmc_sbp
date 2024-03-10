@@ -23,38 +23,74 @@ final class MmcSbp {
     bool withWebClient = false,
   }) async {
     _S2bMembersModel s2bMembersModel =
-    _S2bMembersModel.fromJson(_Constants.s2bMembers);
+        _S2bMembersModel.fromJson(_Constants.s2bMembers);
     if (Platform.isIOS) {
       final List<String> schemaApplications = s2bMembersModel.dictionary
           .where((member) => member.schema.isNotEmpty)
           .map((member) => member.schema)
           .toList();
+      final List<String> installedApps =
+          await MmcSbpPlatform.instance.getInstalledBanks(schemaApplications);
+      final List<S2bMemberModelDto> data = s2bMembersModel.dictionary
+          .where((member) =>
+              member.packageName.isNotEmpty &&
+                  installedApps.contains(member.schema) ||
+              (withWebClient && member.isWebClientActive))
+          .map((member) => S2bMemberModelDto(
+                bankName: member.bankName,
+                logoUrl: member.logoUrl,
+                schema: member.schema,
+                packageName: member.packageName,
+                isInstalled: member.schema.isNotEmpty &&
+                    installedApps.contains(member.schema),
+                webClientUrl: member.webClientUrl,
+                isWebClientActive: member.isWebClientActive,
+              ))
+          .toList();
 
+      data.sort((a, b) {
+        if (a.isInstalled && !b.isInstalled) {
+          return -1;
+        } else if (!a.isInstalled && b.isInstalled) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+      return data;
     } else if (Platform.isAndroid) {
       final List<String> androidApplications = s2bMembersModel.dictionary
           .where((member) => member.packageName.isNotEmpty)
           .map((member) => member.packageName)
           .toList();
       final List<String> installedApps =
-      await MmcSbpPlatform.instance.getInstalledBanks(androidApplications);
+          await MmcSbpPlatform.instance.getInstalledBanks(androidApplications);
 
       final List<S2bMemberModelDto> data = s2bMembersModel.dictionary
           .where((member) =>
-      member.packageName.isNotEmpty &&
-          installedApps.contains(member.packageName) ||
-          (withWebClient && member.isWebClientActive))
-          .map((member) =>
-          S2bMemberModelDto(
-            bankName: member.bankName,
-            logoUrl: member.logoUrl,
-            schema: member.schema,
-            packageName: member.packageName,
-            isInstalled: member.packageName.isNotEmpty &&
-                installedApps.contains(member.packageName),
-            webClientUrl: member.webClientUrl,
-            isWebClientActive: member.isWebClientActive,
-          ))
+              member.packageName.isNotEmpty &&
+                  installedApps.contains(member.packageName) ||
+              (withWebClient && member.isWebClientActive))
+          .map((member) => S2bMemberModelDto(
+                bankName: member.bankName,
+                logoUrl: member.logoUrl,
+                schema: member.schema,
+                packageName: member.packageName,
+                isInstalled: member.packageName.isNotEmpty &&
+                    installedApps.contains(member.packageName),
+                webClientUrl: member.webClientUrl,
+                isWebClientActive: member.isWebClientActive,
+              ))
           .toList();
+      data.sort((a, b) {
+        if (a.isInstalled && !b.isInstalled) {
+          return -1;
+        } else if (!a.isInstalled && b.isInstalled) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
       return data;
     }
     return [];
@@ -63,6 +99,6 @@ final class MmcSbp {
   void openBank({
     required String nspkUrl,
     required S2bMemberModelDto member,
-  }) async => MmcSbpPlatform.instance.openBank(nspkUrl: nspkUrl, member: member);
-
+  }) async =>
+      MmcSbpPlatform.instance.openBank(nspkUrl: nspkUrl, member: member);
 }
