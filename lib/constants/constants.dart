@@ -3,7 +3,7 @@ part of '../mmc_sbp.dart';
 sealed class _Constants {
   static const Map<String, dynamic> s2bMembers = {
     "version": "1.0",
-    "dictionary":  [
+    "dictionary": [
       {
         "bankName": "Сбербанк",
         "logoURL": "https://qr.nspk.ru/proxyapp/logo/bank100000000111.png",
@@ -21,8 +21,8 @@ sealed class _Constants {
         "logoURL": "https://qr.nspk.ru/proxyapp/logo/bank100000000005.png",
         "schema": "bank110000000005",
         "package_name": "ru.vtb24.mobilebanking.android",
-        "webClientUrl":"https://online.vtb.ru/i/paymentSbp",
-        "isWebClientActive":"true"
+        "webClientUrl": "https://online.vtb.ru/i/paymentSbp",
+        "isWebClientActive": "true"
       },
       {
         "bankName": "АЛЬФА-БАНК",
@@ -53,16 +53,16 @@ sealed class _Constants {
         "logoURL": "https://qr.nspk.ru/proxyapp/logo/bank100000000010.png",
         "schema": "bank100000000010",
         "package_name": "logo.com.mbanking",
-        "webClientUrl":"https://ib.psbank.ru/sbp/payment",
-        "isWebClientActive":"true"
+        "webClientUrl": "https://ib.psbank.ru/sbp/payment",
+        "isWebClientActive": "true"
       },
       {
         "bankName": "Совкомбанк",
         "logoURL": "https://qr.nspk.ru/proxyapp/logo/bank100000000013.png",
         "schema": "bank100000000013",
         "package_name": "ru.sovcomcard.halva.v1",
-        "webClientUrl":"https://halvacard.ru/lk/qr",
-        "isWebClientActive":"true"
+        "webClientUrl": "https://halvacard.ru/lk/qr",
+        "isWebClientActive": "true"
       },
       {
         "bankName": "РОСБАНК",
@@ -87,9 +87,8 @@ sealed class _Constants {
         "logoURL": "https://qr.nspk.ru/proxyapp/logo/bank100000000030.png",
         "schema": "bank100000000030",
         "package_name": "ru.unicredit.android",
-        "webClientUrl":"https://enter.unicredit.ru/c2b",
-        "isWebClientActive":"true"
-
+        "webClientUrl": "https://enter.unicredit.ru/c2b",
+        "isWebClientActive": "true"
       },
       {
         "bankName": "Банк Синара",
@@ -240,7 +239,6 @@ sealed class _Constants {
         "logoURL": "https://qr.nspk.ru/proxyapp/logo/bank100000000124.png",
         "schema": "bank100000000124",
         "package_name": "ru.ftc.faktura.orbank"
-
       },
       {
         "bankName": "КБ АГРОПРОМКРЕДИТ",
@@ -841,8 +839,8 @@ sealed class _Constants {
         "logoURL": "https://qr.nspk.ru/proxyapp/logo/bank100000000236.png",
         "schema": "bank100000000236",
         "package_name": "ru.ipb.ubsmobile",
-        "webClientUrl":"https://on-line.ipb.ru/sbp",
-        "isWebClientActive":"true"
+        "webClientUrl": "https://on-line.ipb.ru/sbp",
+        "isWebClientActive": "true"
       },
       {
         "bankName": "КБ Пойдём!",
@@ -1023,8 +1021,8 @@ sealed class _Constants {
         "logoURL": "https://qr.nspk.ru/proxyapp/logo/bank100000000250.png",
         "schema": "bank100000000250",
         "package_name": "com.cetelem.cetelem_android",
-        "webClientUrl":"https://online.driveclickbank.ru",
-        "isWebClientActive":"true"
+        "webClientUrl": "https://online.driveclickbank.ru",
+        "isWebClientActive": "true"
       },
       {
         "bankName": "ГУТА-БАНК",
@@ -1145,8 +1143,8 @@ sealed class _Constants {
         "bankName": "Плайт",
         "logoURL": "https://qr.nspk.ru/proxyapp/logo/bank100000000296.png",
         "schema": "bank100000000296",
-        "webClientUrl":"https://plait.ru/lk/qr",
-        "isWebClientActive":"true"
+        "webClientUrl": "https://plait.ru/lk/qr",
+        "isWebClientActive": "true"
       },
       {
         "bankName": "Банк Оранжевый",

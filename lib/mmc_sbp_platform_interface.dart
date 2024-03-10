@@ -21,7 +21,8 @@ abstract class MmcSbpPlatform extends PlatformInterface {
     throw UnimplementedError('getInstalledApps() has not been implemented.');
   }
 
-  Future<bool> openBank({required String nspkUrl, required S2bMemberModelDto member}) async {
+  Future<bool> openBank(
+      {required String nspkUrl, required S2bMemberModelDto member}) async {
     throw UnimplementedError('openBank() has not been implemented.');
   }
 }

@@ -13,65 +13,53 @@ class MethodChannelMmcSbp extends MmcSbpPlatform {
   final methodChannel = const MethodChannel('mmc_sbp');
 
   @override
-  Future<List<String>> getInstalledBanks(List<String> apps) async {
-    List<dynamic>? data =
-        await methodChannel.invokeMethod('getInstalledBanks', apps);
-    return List<String>.from(data ?? []);
-  }
+  Future<List<String>> getInstalledBanks(List<String> apps) async =>
+      List<String>.from(
+          await methodChannel.invokeMethod('getInstalledBanks', apps) ?? []);
 
   @override
   Future<bool> openBank({
     required String nspkUrl,
     required S2bMemberModelDto member,
   }) async {
+    String url = member.isInstalled
+        ? nspkUrl.replaceFirst("https", member.schema)
+        : "${member.webClientUrl}/${nspkUrl.split("/").last}";
+
     if (Platform.isAndroid) {
-      String url;
-      String? packageName;
-      if (member.isInstalled) {
-        url = nspkUrl.contains("https")
-            ? nspkUrl.replaceFirst("https", member.schema)
-            : nspkUrl;
-        packageName = member.packageName;
-      } else {
-        url = "${member.webClientUrl}/${nspkUrl.split("/").last}";
-      }
-      return _openAndroidBank(url: url, packageName: packageName);
+      return _openAndroidBank(nspkUrl: url, member: member);
     } else if (Platform.isIOS) {
-      String url = nspkUrl;
-      String? schema;
-      if (!member.isInstalled) {
-        url = "${member.webClientUrl}/${nspkUrl.split("/").last}";
-      } else {
-        schema = member.schema;
-      }
-      print(url);
-      print("schema: $schema");
-      return openBankIOS(
-        url,
-        schema,
-      );
+      return _openBankIOS(nspkUrl: url, member: member);
     }
-    return Future.value(false);
+    return false;
   }
 
   Future<bool> _openAndroidBank({
-    required String url,
-    String? packageName,
-  }) async =>
-      await methodChannel.invokeMethod(
-        'openBank',
-        {
-          'url': url,
-          'package_name': packageName,
-        },
-      );
+    required String nspkUrl,
+    required S2bMemberModelDto member,
+  }) async {
+    String? packageName = member.isInstalled ? member.packageName : null;
+    return await methodChannel.invokeMethod(
+      'openBank',
+      {
+        'url': nspkUrl,
+        'package_name': packageName,
+      },
+    );
+  }
 
-  Future<bool> openBankIOS(String url, String? schema) async =>
-      await methodChannel.invokeMethod(
-        'openBank',
-        {
-          'url': url,
-          'schema': schema,
-        },
-      );
+  Future<bool> _openBankIOS({
+    required String nspkUrl,
+    required S2bMemberModelDto member,
+  }) async {
+    String? schema = member.isInstalled ? member.schema : null;
+
+    return await methodChannel.invokeMethod(
+      'openBank',
+      {
+        'url': nspkUrl,
+        'schema': schema,
+      },
+    );
+  }
 }
