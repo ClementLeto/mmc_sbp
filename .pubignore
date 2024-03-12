@@ -5,7 +5,9 @@
 .idea/
 .packages
 build/
-
+test/
+example/integration_test/
+example/test/
 # If you're building an application, you may want to check-in your pubspec.lock
 pubspec.lock
 mmc_sbp.iml
